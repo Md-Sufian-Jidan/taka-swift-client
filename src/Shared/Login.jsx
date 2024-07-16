@@ -1,36 +1,36 @@
 import {  useState } from "react";
 import { FaEye, FaEyeSlash, } from "react-icons/fa";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-// import { toast } from "react-toastify";
+import { toast } from "react-toastify";
 import { JackInTheBox, Slide, Zoom } from "react-awesome-reveal";
 import useAuth from "../Hooks/useAuth";
 
 const Login = () => {
     const location = useLocation();
     console.log(location);
-    // const navigate = useNavigate();
+    const navigate = useNavigate();
     // show password
     const [show, setShow] = useState(false);
-    const { isLoading, } = useAuth();
+    const { isLoading,signInUser } = useAuth();
     if (isLoading) {
         <span className="loading loading-bars loading-lg"></span>
     }
 
     const handleLogin = (e) => {
-        // e.preventDefault();
-        // const form = e.target;
-        // const email = form.email.value;
-        // const password = form.password.value;
-        // signInUser(email, password)
-        //     .then((result) => {
-        //         console.log(result.user);
-        //         navigate(location?.state ? location.state : '/');
-        //         return toast.success('User Login Successfully');
-        //     })
-        //     .catch((error) => {
-        //         console.log(error);
-        //         return toast.error('opps! Something wrong please reload the page and try again')
-        //     })
+        e.preventDefault();
+        const form = e.target;
+        const email = form.email.value;
+        const password = form.password.value;
+        signInUser(email, password)
+            .then((result) => {
+                console.log(result.user);
+                navigate(location?.state ? location.state : '/');
+                return toast.success('User Login Successfully');
+            })
+            .catch((error) => {
+                console.log(error);
+                return toast.error('opps! Something wrong please reload the page and try again')
+            })
     }
 
     //google login
@@ -61,12 +61,13 @@ const Login = () => {
     // };
     return (
         <div className="md:w-1/2 w-3/4 mx-auto my-3" >
+            <h2 className="text-3xl text-center text-white my-3">Login Now</h2>
             <JackInTheBox>
-                <form onSubmit={handleLogin} className="bg-blue-200 p-10  rounded-2xl">
+                <form onSubmit={handleLogin} className="bg-gradient-to-t from-blue-300 to-green-200 p-10  rounded-2xl">
                     <Slide delay={500}>
                         <div className="form-control">
                             <label className="label">
-                                <span className="label-text">Email</span>
+                                <span className="label-text text-white">Email</span>
                             </label>
                             <input type="email" placeholder="email" name="email" className="input input-bordered" />
                         </div>
@@ -74,7 +75,7 @@ const Login = () => {
                     <Slide delay={800} direction="right">
                         <div className="form-control relative">
                             <label className="label">
-                                <span className="label-text">Password</span>
+                                <span className="label-text text-white">Password</span>
                             </label>
                             <input type={show ? 'text' : 'password'} placeholder="password" name="password" className="input input-bordered" />
                             <span className="absolute top-[52px] right-3" onClick={() => setShow(!show)}>
@@ -90,11 +91,11 @@ const Login = () => {
                     </Slide>
                     <Slide delay={1100}>
                         <div className="form-control my-3">
-                            <button className="btn bg-[#adf010]">Login</button>
+                            <button className="btn bg-[#adf010] hover:text-white">Login</button>
                         </div>
                     </Slide>
                     <Slide delay={1500} direction="right">
-                        <p>Do not Have An Account? <Link className="underline" to="/register">Register One</Link></p>
+                        <p className="text-white">Do not Have An Account? <Link className="underline" to="/register">Register One</Link></p>
                     </Slide>
                 </form>
             </JackInTheBox>
